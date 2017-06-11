@@ -1,24 +1,26 @@
+import StringConstants
+import ElementConstants
 def reviewBook(bookname,url):
-    print("PLease Wait! Loading Information on  "+ bookname + " haiving url: " + url)
+    print(StringConstants.informationLoadingMessage + bookname + StringConstants.havingUrlMsg + url)
     import requests
     from bs4 import BeautifulSoup
     try:
-        r = requests.get(url, timeout = 6)
+        r = requests.get(url, timeout = ElementConstants.drilldownTimeOutCount)
     except requests.exceptions.Timeout:
-        print("TimeOut error")
+        print(StringConstants.timeoutError)
     except requests.exceptions.TooManyRedirects:
-        print("Url is bad: TooManyRedirects")
+        print(StringConstants.badUrlError)
     except requests.exceptions.RequestException as e:
-        print("Some Unexpected error has occured::")
+        print(StringConstants.unexpectedError)
         print(e)
         exit(1)
-    soup = BeautifulSoup(r.content,"lxml")
+    soup = BeautifulSoup(r.content,ElementConstants.beautifulSoupMethodName)
     try:
-        for d in soup.find_all('div', {"class": "readable stacked"}):
-                k = d.find_all('span')
+        for d in soup.find_all(ElementConstants.divComponent, {ElementConstants.classComponent: ElementConstants.drilldownElementToRead}):
+                k = d.find_all(ElementConstants.spanComponent)
                 try:
                     print(k[1].text)
                 except:
-                    print("No Information Found!")
+                    print(StringConstants.noInformationFoundError)
     except:
-        print("No Information found")
+        print(StringConstants.noInformationFoundError)
