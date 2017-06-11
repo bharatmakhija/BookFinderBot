@@ -4,30 +4,28 @@ import requests
 import os
 from DrillDownBook import reviewBook
 from LoadNextPage import getUrl
-
+import StringConstants
 os.system('cls')
 from bs4 import BeautifulSoup
 book_name = []
 book_url = []
-print("hi, this is my first python script, this is all about you giving booktitle name and extracting every information related to it on your screen")
-Book_title = input('Enter Book title: ')
+print(StringConstants.welcomeMsg);
+Book_title = input(StringConstants.enterBookTitleMsg)
 
-#print(soup.prettify())
 counter = 1
 flag = 1
 pageno = 0
 while(flag):
-    #url = 'https://www.goodreads.com/search?q='+Book_title
     pageno += 1
     url = getUrl(pageno,Book_title)
     try:
         r = requests.get(url, timeout = 6)
     except requests.exceptions.Timeout:
-        print("TimeOut error")
+        print(StringConstants.timeoutError)
     except requests.exceptions.TooManyRedirects:
-        print("Url is bad: TooManyRedirects")
+        print(StringConstants.badUrlError)
     except requests.exceptions.RequestException as e:
-        print("Some Unexpected error has occured::")
+        print(StringConstants.unexpectedError)
         print(e)
         break
 
@@ -47,12 +45,12 @@ while(flag):
                pass
         a = tr.find_all('a', href=True)
         book_url.append(a[1]['href'])
-    flag = int(input('keep loading 1/0 :'))
+    flag = int(input(StringConstants.loadingMsg))
 
 num = int(1)
 while(num):
-    x = int(input('enter books serial number which you want to review: '))
-    bookurl ="https://www.goodreads.com"+ book_url[x-1]  #must give a check here weather book url is correct or not.
+    x = int(input(StringConstants.enterSerialNoMsg))
+    bookurl =StringConstants.goodReadsString + book_url[x-1]
     Ddb = reviewBook(book_name[x-1],bookurl)
-    num = int(input('enter 1 to continue , 0 to end: '))
-end = input('enter key to exit: ')
+    num = int(input(StringConstants.continueString))
+end = input(StringConstants.exitString)
