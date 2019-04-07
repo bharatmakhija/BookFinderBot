@@ -15,17 +15,10 @@ just give title or a word in title or author name as input. Done!
 
 Support
 -------
-If you are having issues, contact me directly.
-
-License
--------
-This is open source.
+If you are having issues, please comment on the github page or can mail me at bharatkumarmakhija14@gmail.com.
 
 
 Discalimer
 ----------
-I wrote this code for fun and this was my first python script.
-
-Credits
--------
-myself. :P
+I wrote this code for fun and this was my first python script. It is supposed to be used strictly for
+learning purpose only.
